@@ -8,7 +8,7 @@ pipeline{
 	stages{	    
 		stage('Build'){
 			steps{
-				sh '/home/maven/apache-maven-3.6.3/mvn clean install'
+				sh '/home/maven/apache-maven-3.6.3/bin/mvn clean install'
 				junit 'target/surefire-reports/TEST-*.xml'
 			}
 		}
