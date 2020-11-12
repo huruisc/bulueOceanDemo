@@ -9,19 +9,10 @@ pipeline {
     }
 
     stage('Test') {
-      parallel {
-        stage('Test') {
-          steps {
-            junit 'target/surefire-reports/TEST-*.xml'
-          }
-        }
-
-        stage('dependency-check') {
-          steps {
-            dependencyCheck()
-          }
-        }
-
+      steps {
+        junit 'target/surefire-reports/TEST-*.xml'
+        dependencyCheck(additionalArguments: '--failOnCVSS 10 --format ALL', odcInstallation: 'dependency-check')
+        dependencyCheckPublisher(pattern: 'dependency-check-report.xml')
       }
     }
 
