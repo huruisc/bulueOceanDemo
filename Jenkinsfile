@@ -11,11 +11,14 @@ pipeline {
     stage('Test') {
       steps {
         junit 'target/surefire-reports/TEST-*.xml'
+      }
+    }
+   stage('Dependency-check') {
+      steps {
         dependencyCheck(additionalArguments: '--failOnCVSS 10 --format ALL', odcInstallation: 'dependency-check')
         dependencyCheckPublisher(pattern: 'dependency-check-report.xml')
       }
     }
-
     stage('Deploy') {
       steps {
         echo 'this is a deploying ....'
